@@ -1,0 +1,69 @@
+#include <TXLib.h>
+#include <stdio.h>
+#include <math.h>
+
+int SolveSquare (double a, double b, double c, double* x1, double* x2);
+
+int main(void)
+{
+    printf("Мяу\n");
+    printf("Эта программа решает квадратные уравнения\n");
+    printf("Вы имеете уравнение вида: ax^2+bx+c=0\n");
+    printf("Введите пожалуйста коэффициенты\n");
+
+
+    double a = 0, b = 0, c = 0;     // коэффициенты уравнения
+    double x1 = 0, x2 = 0;          //корни уравнения
+
+    while(scanf("%lg %lg %lg", &a, &b, &c) != 3)
+    {
+        printf("Ты дурак?");      // Ответ при введении не числовых значений
+        return 0;
+    }
+
+    int CountRoots = SolveSquare(a, b, c, &x1, &x2);
+    switch (CountRoots)                              // Считает количество корней
+    {
+        case 0:
+            printf ("Корней нет.\n");
+            break;
+        case 1:
+            printf ("Один корень x = %lg\n", x1);
+            break;
+        case 2:
+            printf ("Два корня: x1 = %lg, x2 = %lg\n", x1, x2);
+            break;
+        default:
+            printf ("ERROR");
+    }
+    printf("COMMIT GITHUB");
+}
+
+
+int SolveSquare(double a, double b, double c, double* x1, double* x2)
+{
+    if ((b * b - 4 * a * c) < 0)
+    {
+        return 0;
+    }
+    else if ((b * b - 4 * a * c) == 0)
+    {
+        (*x1)= (-b) / (2 * a);
+        return 1;
+    }
+    else if ((b * b - 4 * a * c) > 0)
+    {
+        if (a == 0)
+        {
+            (*x1) = (-c) / b;
+            return 1;
+        }
+        else if (a != 0)
+        {
+            (*x1) = (-b + sqrt(b * b - 4 * a * c)) / (2 * a);
+            (*x2) = (-b - sqrt(b * b - 4 * a * c)) / (2 * a);
+            return 2;
+        }
+    }
+    return 0;
+}
